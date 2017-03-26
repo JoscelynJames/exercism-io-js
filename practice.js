@@ -85,19 +85,35 @@
 //  2a. if beings with vowel : add ay to the end
 //  2b. if begins with consonant: move first letter of word to end and add ay
 
-var vowels = ['a','e','i','u','o']
+var vowels = {
+  a: true,
+  e: true,
+  i: true,
+  o: true,
+  u: true
+}
 var consonant = ['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','x']
 
 function pigLatinTranslator(word) {
   if (typeof word !== 'string') return 'You must enter a string.';
 
-  var wordArray = word.split('')
+  var wordArray = word.split('');
+  var pigLatin;
 
-    // wordArray.push('ay')
-    // var pigLatin = wordArray.join('')
-    // return pigLatin
+  for (var i = 0; i < wordArray.length; i++) {
+    var currentLetter = wordArray[0];
+
+    if ( vowels.hasOwnProperty(currentLetter) ) {
+      wordArray.push('ay');
+      break;
+    } else {
+      wordArray.push(wordArray.shift());
+    }
+  }
+  pigLatin = wordArray.join('');
+  return pigLatin;
 }
 
 
 
-console.log(pigLatinTranslator('pear'));
+console.log(pigLatinTranslator('bradford'));

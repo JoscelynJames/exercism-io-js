@@ -92,28 +92,55 @@ var vowels = {
   o: true,
   u: true
 }
-var consonant = ['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','x']
 
 function pigLatinTranslator(word) {
   if (typeof word !== 'string') return 'You must enter a string.';
 
-  var wordArray = word.split('');
+  var wordArray = word.split(' ');
   var pigLatin;
 
-  for (var i = 0; i < wordArray.length; i++) {
-    var currentLetter = wordArray[0];
+  if (wordArray.length === 1) {
+    wordArray = wordArray[0].split('');
 
-    if ( vowels.hasOwnProperty(currentLetter) ) {
-      wordArray.push('ay');
-      break;
-    } else {
-      wordArray.push(wordArray.shift());
+    for (var i = 0; i < wordArray.length; i++) {
+      if ( vowels.hasOwnProperty(wordArray[0]) ) {
+        wordArray.push('ay');
+        break;
+      } else {
+        wordArray.push(wordArray.shift());
+      }
     }
+
+    pigLatin = wordArray.join('');
+
+    return pigLatin;
+
+  } else if (wordArray.length > 1) {
+    var newArray = [];
+
+    for (var i = 0; i < wordArray.length; i++) {
+      var splitWord = wordArray[i].split('');
+
+      for (var j = 0; j < splitWord.length; j++) {
+        if ( vowels.hasOwnProperty(splitWord[0]) ) {
+          splitWord.push('ay');
+          newArray.push(splitWord);
+          break;
+        } else {
+          splitWord.push(splitWord.shift());
+        }
+      }
+    }
+    var solution =  newArray.map(function(item) {
+      return item + ' ';
+    });
+
+    solution = solution.map(function(item) {
+      return item.replace(/,/ig, '');
+    })
+
+    return solution.join(',').replace(/,/ig, '');
   }
-  pigLatin = wordArray.join('');
-  return pigLatin;
 }
 
-
-
-console.log(pigLatinTranslator('bradford'));
+console.log(pigLatinTranslator('bradford is gay'));

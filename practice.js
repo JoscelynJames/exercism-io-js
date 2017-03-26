@@ -90,30 +90,32 @@ var vowels = {
   e: true,
   i: true,
   o: true,
-  u: true
+  u: true,
+  q: true
 }
 
 function pigLatinTranslator(word) {
   if (typeof word !== 'string') return 'You must enter a string.';
 
   var wordArray = word.split(' ');
-  var pigLatin;
 
   if (wordArray.length === 1) {
     wordArray = wordArray[0].split('');
 
     for (var i = 0; i < wordArray.length; i++) {
       if ( vowels.hasOwnProperty(wordArray[0]) ) {
-        wordArray.push('ay');
+        if (wordArray[0] === 'q') {
+          wordArray.splice(0, 2);
+          wordArray.push('q', 'u');
+        }
+        wordArray.push('a', 'y');
         break;
       } else {
         wordArray.push(wordArray.shift());
       }
     }
 
-    pigLatin = wordArray.join('');
-
-    return pigLatin;
+    return wordArray.join('');
 
   } else if (wordArray.length > 1) {
     var newArray = [];
@@ -123,24 +125,23 @@ function pigLatinTranslator(word) {
 
       for (var j = 0; j < splitWord.length; j++) {
         if ( vowels.hasOwnProperty(splitWord[0]) ) {
-          splitWord.push('ay');
-          newArray.push(splitWord);
+          if (splitWord[0] === 'q') {
+            splitWord.splice(0, 2);
+            splitWord.push('q', 'u');
+          }
+          splitWord.push('a', 'y');
+          newArray.push(splitWord.join(''));
           break;
         } else {
           splitWord.push(splitWord.shift());
         }
       }
     }
-    var solution =  newArray.map(function(item) {
-      return item + ' ';
-    });
-
-    solution = solution.map(function(item) {
-      return item.replace(/,/ig, '');
-    })
-
-    return solution.join(',').replace(/,/ig, '');
+    return newArray.join(' ');
   }
 }
 
+console.log(pigLatinTranslator('bradford'));
+console.log(pigLatinTranslator('queen'));
 console.log(pigLatinTranslator('bradford is gay'));
+console.log(pigLatinTranslator('bradford is a queen'));

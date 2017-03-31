@@ -85,63 +85,80 @@
 //  2a. if beings with vowel : add ay to the end
 //  2b. if begins with consonant: move first letter of word to end and add ay
 
-var vowels = {
-  a: true,
-  e: true,
-  i: true,
-  o: true,
-  u: true,
-  q: true
-}
+// var vowels = {
+//   a: true,
+//   e: true,
+//   i: true,
+//   o: true,
+//   u: true,
+//   q: true
+// }
+//
+// function pigLatinTranslator(word) {
+//   if (typeof word !== 'string') return 'You must enter a string.';
+//
+  // var wordArray = word.split(' ');
+//
+//   if (wordArray.length === 1) {
+//     wordArray = wordArray[0].split('');
+//
+//     for (var i = 0; i < wordArray.length; i++) {
+//       if ( vowels.hasOwnProperty(wordArray[0]) ) {
+//         if (wordArray[0] === 'q') {
+//           wordArray.splice(0, 2);
+//           wordArray.push('q', 'u');
+//         }
+//         wordArray.push('a', 'y');
+//         break;
+//       } else {
+//         wordArray.push(wordArray.shift());
+//       }
+//     }
+//
+//     return wordArray.join('');
+//
+//   } else if (wordArray.length > 1) {
+//     var newArray = [];
+//
+//     for (var i = 0; i < wordArray.length; i++) {
+//       var splitWord = wordArray[i].split('');
+//
+//       for (var j = 0; j < splitWord.length; j++) {
+//         if ( vowels.hasOwnProperty(splitWord[0]) ) {
+//           if (splitWord[0] === 'q') {
+//             splitWord.splice(0, 2);
+//             splitWord.push('q', 'u');
+//           }
+//           splitWord.push('a', 'y');
+//           newArray.push(splitWord.join(''));
+//           break;
+//         } else {
+//           splitWord.push(splitWord.shift());
+//         }
+//       }
+//     }
+//     return newArray.join(' ');
+//   }
+// }
 
-function pigLatinTranslator(word) {
-  if (typeof word !== 'string') return 'You must enter a string.';
+// console.log(pigLatinTranslator('bradford'));
+// console.log(pigLatinTranslator('queen'));
+// console.log(pigLatinTranslator('bradford is gay'));
+// console.log(pigLatinTranslator('bradford is a queen'));
 
-  var wordArray = word.split(' ');
 
-  if (wordArray.length === 1) {
-    wordArray = wordArray[0].split('');
+//phone number
 
-    for (var i = 0; i < wordArray.length; i++) {
-      if ( vowels.hasOwnProperty(wordArray[0]) ) {
-        if (wordArray[0] === 'q') {
-          wordArray.splice(0, 2);
-          wordArray.push('q', 'u');
-        }
-        wordArray.push('a', 'y');
-        break;
-      } else {
-        wordArray.push(wordArray.shift());
-      }
-    }
+function phoneNumCleaner(phoneNum) {
+  var cleanNum = phoneNum.replace(/[^A-Z0-9]/ig, '');
 
-    return wordArray.join('');
-
-  } else if (wordArray.length > 1) {
-    var newArray = [];
-
-    for (var i = 0; i < wordArray.length; i++) {
-      var splitWord = wordArray[i].split('');
-
-      for (var j = 0; j < splitWord.length; j++) {
-        if ( vowels.hasOwnProperty(splitWord[0]) ) {
-          if (splitWord[0] === 'q') {
-            splitWord.splice(0, 2);
-            splitWord.push('q', 'u');
-          }
-          splitWord.push('a', 'y');
-          newArray.push(splitWord.join(''));
-          break;
-        } else {
-          splitWord.push(splitWord.shift());
-        }
-      }
-    }
-    return newArray.join(' ');
+  if (cleanNum.length === 10) {
+    return cleanNum;
+  } else if (cleanNum.length === 11 && cleanNum.charAt(0) === '1') {
+    return cleanNum.substring(1);
+  } else {
+    return 'Please enter valid phone number';
   }
 }
 
-console.log(pigLatinTranslator('bradford'));
-console.log(pigLatinTranslator('queen'));
-console.log(pigLatinTranslator('bradford is gay'));
-console.log(pigLatinTranslator('bradford is a queen'));
+console.log(phoneNumCleaner('1303-638-0055'));
